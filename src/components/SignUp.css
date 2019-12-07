@@ -1,0 +1,72 @@
+h2 {
+	text-align: center;
+	color:black;
+	font-family: calibri;
+	font:'Raleway', sans-serif;
+	text-transform: uppercase;
+	letter-spacing: .5em;
+	font-size:50px;
+}
+
+body {
+	background:linear-gradient(to right, rgb(49, 59, 191), rgb(39, 156, 17));
+}
+
+input {
+	padding:10px;
+	display:inline-block;
+	width:250px;
+	margin:30px;
+	align-items: center;
+	text-align:center;
+	background:black;
+	font-size:30px;
+	color:beige;
+}
+
+form {
+	text-align:center;
+}
+
+.registerbutton {
+	float:right;
+	background-color:blue;
+	margin-right: 200px;
+}
+
+.registerbuttonsi {
+	float:right;
+	background-color:blue;
+
+}
+
+.largeCheckbox {
+	width: 30px; 
+            height: 30px; 
+}
+
+.signinbutton {
+
+	background-color:blue;
+
+}
+
+button {
+	padding:10px;
+	display:inline-block;
+	width:250px;
+	margin:30px;
+	align-items: center;
+	text-align:center;
+	background:black;
+	font-size:30px;
+	color:beige;
+}
+
+td {
+	width:100px;
+}
+
+
+
+
