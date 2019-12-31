@@ -9,7 +9,6 @@ const NetworkArray1 = ({networkfilter,handleChange,handleClick}) => {
 			name = {networkfilter[i].firstname + ' ' + networkfilter[i].lastname} 
 			handleClick ={handleClick}
 			
-
 			/>
 
 					)

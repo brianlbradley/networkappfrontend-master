@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import SignUp from "./components/SignUp";
 import NetworkArray from "./components/NetworkArray";
 import NetworkArray1 from "./components/NetworkArray1";
-import { suggest } from "./components/SuggestData";
+
 import "./App.css";
 import "tachyons";
 import Searchbox from "./components/Searchbox";
@@ -11,9 +11,15 @@ import Navigation from "./components/Navigation";
 import MyNetworkArray from "./components/MyNetworkArray";
 import SuggestArray from "./components/SuggestArray";
 import SearchSuggestions from "./components/SearchSuggestions";
+import ModalForm from './Modals/Modal';
+import DataTable from './Tables/DataTable';
+import { Container, Row, Col } from 'reactstrap'
+
 
 const initialState = {
-  searchfield: ""
+  searchfield: "",
+
+
 };
 
 class App extends Component {
@@ -22,7 +28,7 @@ class App extends Component {
     this.state = {
       network: [],
       networkfilter: [],
-      suggest: suggest,
+      items:[],
       searchfield: "",
       searchsuggest: "",
       route: "signin",
@@ -63,7 +69,38 @@ class App extends Component {
         //debugger;
         this.setState({ networkusers: data });
       });
+
+     fetch('http://localhost:3000/crud')
+      .then(response => response.json())
+      .then(items => this.setState({items}))
+      .catch(err => console.log(err))
+
+
   };
+
+addItemToState = (item) => {
+    this.setState(prevState => ({
+      items: [...prevState.items, item]
+    }))
+  }
+
+  updateState = (item) => {
+    const itemIndex = this.state.items.findIndex(data => data.id === item.id)
+    const newArray = [
+    // destructure all items from beginning to the indexed item
+      ...this.state.items.slice(0, itemIndex),
+    // add the updated item to the array
+      item,
+    // add the rest of the items to the array from the index after the replaced item
+      ...this.state.items.slice(itemIndex + 1)
+    ]
+    this.setState({ items: newArray })
+  }
+
+  deleteItemFromState = (id) => {
+    const updatedItems = this.state.items.filter(item => item.id !== id)
+    this.setState({ items: updatedItems })
+  }
  
   loadUser = data => {
     this.setState({
@@ -91,10 +128,11 @@ class App extends Component {
     //Filters the suggest array based on card id matching suggest array id. Returns nothing
     //if there are no suggestions for id.  Changes route to suggestions which will display network name.
     //Setting routed:true makes sure all buttons are displayed
-    const updatedSuggest = suggest.map(sugg => {
+    const updatedSuggest = this.state.items.map(sugg => {
       if (sugg.id === id) {
+
         this.setState({
-          suggest: suggest.filter(suggest => suggest.id === id),
+          suggest: this.state.items.filter(suggest => this.state.items.id === id),
           route: "suggestions"
         });
         this.setState({ routed: true });
@@ -139,8 +177,8 @@ class App extends Component {
 
   onRouteChange = route => {
     if (route === "home") {
+      this.fetchData();
       this.setState({ routed: true });
-
       this.setState({ isSignedIn: true });
     } else if (route === "mynetwork") {
       this.setState({ routed: false });
@@ -166,21 +204,21 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.state);
-
+   
     const filteredNetwork = this.state.network.filter(netw => {
       return netw.lastname
         .toLowerCase()
         .includes(this.state.searchfield.toLowerCase());
     });
 
-    const filteredSuggestions = this.state.suggest.filter(sugg => {
+    const filteredSuggestions = this.state.items.filter(sugg => {
       return sugg.location
         .toLowerCase()
         .includes(this.state.searchsuggest.toLowerCase());
     });
 
     return (
+       <Container className="App">
       <div className="tc">
         <Navigation
           isSignedIn={this.state.isSignedIn}
@@ -191,20 +229,22 @@ class App extends Component {
 
         {this.state.route === "home" ? (
           <div>
+
             <h2 className="ml6">All Network</h2>
             <Searchbox
               searchChange={this.onSearchChange}
               onRouteChange={this.onRouteChange}
               routed={this.state.routed}
+              fetchData={this.fetchData}
             />
             <NetworkArray
-              network={filteredNetwork}
+               network={filteredNetwork}
               networkusers={this.state.networkusers}
               loginuser={this.state.user}
-              handleChange={this.handleChange}
               handleClick={this.handleClick}
-              selectedCard={this.state.suggest}
+              selectedCard={this.state.items}
               onRouteChange={this.onRouteChange}
+              fetchData={this.fetchData}
 
             />
           </div>
@@ -215,16 +255,17 @@ class App extends Component {
               searchChange={this.onSearchChange}
               onRouteChange={this.onRouteChange}
               routed={this.state.routed}
+              fetchData={this.fetchData}
             />
 
             <MyNetworkArray
              network={filteredNetwork}
               networkusers={this.state.networkusers}
               loginuser={this.state.user}
-              handleChange={this.handleChange}
               handleClick={this.handleClick}
-              selectedCard={this.state.suggest}
+              selectedCard={this.state.items}
               onRouteChange={this.onRouteChange}
+              fetchData={this.fetchData}
             />
           </div>
         ) : this.state.route === "register" ? (
@@ -243,29 +284,37 @@ class App extends Component {
               networkfilter={this.state.networkfilter}
               handleClick={this.handleClick}
               onRouteChange={this.onRouteChange}
+              fetchData={this.fetchData}
             />
             <SuggestArray
               onRouteChange={this.onRouteChange}
-              suggest={filteredSuggestions}
+              items={filteredSuggestions}  
             />
           </div>
         ) : this.state.route === "allsuggestions" ? (
           <div>
-            <h2 className="ml6">All Suggestions</h2>
+            <h3 className="ml4">All Suggestions</h3>
             <SearchSuggestions
               searchSuggestions={this.onSuggestChange}
               onRouteChange={this.onRouteChange}
               routed={this.state.routed}
             />
-            <SuggestArray
-              onRouteChange={this.onRouteChange}
-              suggest={filteredSuggestions}
-            />
+            <Row>
+          <Col>
+            <DataTable items={filteredSuggestions} updateState={this.updateState} deleteItemFromState={this.deleteItemFromState} />
+          </Col>
+        </Row>
+         <Row>
+          <Col>
+            <ModalForm buttonLabel="Add Item" addItemToState={this.addItemToState}/>
+          </Col>
+        </Row>
           </div>
         ) : (
           <SignIn />
         )}
       </div>
+      </Container>
     );
   }
 }

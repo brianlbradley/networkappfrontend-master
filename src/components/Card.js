@@ -3,7 +3,6 @@ import React, { useState } from "react";
 const onUpdateCB = (ischecked, loginuser, userid, setisChecked,event) => {
 
   console.log(ischecked, loginuser, userid);
-  setisChecked(previousValue => !previousValue)
 
   fetch('http://localhost:3000/cb', {
       method: 'post',
@@ -13,17 +12,18 @@ const onUpdateCB = (ischecked, loginuser, userid, setisChecked,event) => {
       userid,
       ischecked: ischecked
     })
-  })
+  }).then(
+  ()=> setisChecked(ischecked)); 
 };
 
 const Card = props => {
   const [isChecked, setisChecked] = useState(props.ischecked);
-
+  
   // Similar to componentDidMount and componentDidUpdate:
  
   return (
     <div
-      className="pointer bg-light-green dib br3 pa3 ma2 shadow-5"
+      className="pointer bg-light-green dib w-25 br1 pa1 ma3 tc shadow-5"
       onClick={() => props.handleClick(props.id)}
       //onClick={(e) => e.stopPropagation()}
 

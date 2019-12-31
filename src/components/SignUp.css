@@ -8,6 +8,16 @@ h2 {
 	font-size:50px;
 }
 
+h3{
+	text-align: center;
+	color:black;
+	font-family: calibri;
+	font:'Raleway', sans-serif;
+	text-transform: uppercase;
+	letter-spacing: .3em;
+	font-size:35px;
+}
+
 body {
 	background:linear-gradient(to right, rgb(49, 59, 191), rgb(39, 156, 17));
 }
@@ -24,9 +34,7 @@ input {
 	color:beige;
 }
 
-form {
-	text-align:center;
-}
+
 
 .registerbutton {
 	float:right;
@@ -51,11 +59,11 @@ form {
 
 }
 
-button {
-	padding:10px;
+.mybuttons {
+	padding:1px;
 	display:inline-block;
-	width:250px;
-	margin:30px;
+	width:270px;
+	margin:10px;
 	align-items: center;
 	text-align:center;
 	background:black;
@@ -63,9 +71,7 @@ button {
 	color:beige;
 }
 
-td {
-	width:100px;
-}
+
 
 
 

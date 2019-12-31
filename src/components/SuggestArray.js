@@ -1,17 +1,17 @@
 import React from 'react';
 import Table from './Table';
 
-const SuggestArray = ({suggest}) => {
-	const tableComponent = suggest.map((user,i) => {
+const SuggestArray = ({items}) => {
+	const tableComponent = items.map((user,i) => {
 		return(
 		<Table 
 			key = {i}
-			location = {suggest[i].location} 
-			restaurants = {suggest[i].restaurant}
-			resdescription= {suggest[i].resdescription}
-			attractions={suggest[i].attractions}
-			attdescription = {suggest[i].attdescription}
-			id={suggest[i].id}
+			location = {items[i].location} 
+			restaurants = {items[i].restaurant}
+			hobbies= {items[i].hobbies}
+			skills={items[i].skills}
+			name = {items[i].name}
+			id={items[i].id}
 
 			/>
 

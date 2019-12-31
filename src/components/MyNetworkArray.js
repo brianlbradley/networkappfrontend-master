@@ -8,7 +8,7 @@ const MyNetworkArray = ({
   handleClick,
   loginuser
 }) => {
-  console.log("in network array", networkusers);
+  console.log("in MYnetwork array", networkusers);
 
   const cardComponent = network.map((user, i) => {
     const ischecked = networkusers.some(n => {
@@ -30,10 +30,10 @@ const MyNetworkArray = ({
         email={network[i].email}
         city={network[i].city}
         ischecked={ischecked}
-        handleChange={handleChange}
         handleClick={handleClick}
         id={network[i].id}
         loginuser={loginuser}
+
       />:null
     );
   });

@@ -5,24 +5,19 @@ const Searchbox =({searchsuggest,searchSuggestions,onRouteChange,routed}) => {
 if (routed) {
 	return (
 		<div className = "pa3 mr2 dib">
-		<input className ="mr2"
-		type = "search" 
-		placeholder="Search City"
-		onChange={searchSuggestions}
-		onRouteChange={onRouteChange}
-
-		/> 
 		
-		<button className = "mr2"
+		
+		<button className = "mybuttons"
 		onClick={() =>onRouteChange('mynetwork')}
 		>
 		My Network</button> 
 
-		<button onClick = {()=> onRouteChange('home')}>
+		<button className = "mybuttons" 
+		onClick = {()=> onRouteChange('home')}>
 				
 				All Network</button> 
 
-		<button 
+		<button className = "mybuttons"
 		onClick={() =>onRouteChange('allsuggestions')}
 		>
 		All Suggestions</button> 
@@ -40,13 +35,14 @@ if (routed) {
 
 		/> 
 		
-		<button className = "mr2"
+		<button className = "mybuttons"
 		onClick={() =>onRouteChange('mynetwork')}
 		>
 		My Network</button> 
 
-		<button onClick = {()=> onRouteChange('home')}>
-				
+		<button className = "mybuttons"
+		 onClick = {()=> onRouteChange('home')}
+		 >
 				All Network</button> 
 
 
