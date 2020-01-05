@@ -32,7 +32,7 @@ class DataTable extends Component {
     const items = this.props.items.map(item => {
       return (
         <tr key={item.id}>
-       
+        
           <td>{item.name}</td>
           <td>{item.location}</td>
           <td>{item.restaurant}</td>

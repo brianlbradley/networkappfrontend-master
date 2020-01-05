@@ -17,7 +17,7 @@ class AddEditForm extends React.Component {
     this.setState({[e.target.name]: e.target.value})
   }
 
-  submitFormAdd = (e,userid) => {
+  submitFormAdd = e => {
     e.preventDefault()
     fetch('http://localhost:3000/crud', {
       method: 'post',
@@ -29,8 +29,8 @@ class AddEditForm extends React.Component {
         location: this.state.location,
         restaurant: this.state.restaurant,
         skills: this.state.skills,
-        hobbies: this.state.hobbies,
-        userid
+        hobbies: this.state.hobbies
+        
        
       })
     })
@@ -54,11 +54,13 @@ class AddEditForm extends React.Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name:this.state.name,
+        id:this.state.id,
+       name:this.state.name,
         location: this.state.location,
         restaurant: this.state.restaurant,
         skills: this.state.skills,
         hobbies: this.state.hobbies
+        
       })
     })
       .then(response => response.json())
